@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dr. Your Name — Researcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a18;
+      --ink-mid: #4a4a46;
+      --ink-light: #8a8a84;
+      --rule: #e0ddd6;
+      --bg: #faf9f6;
+      --bg-warm: #f3f1ec;
+      --accent: #2a5c8f;
+      --accent-light: #e8f0f8;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --max: 780px;
+    }
+
+    html { font-size: 17px; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--serif);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250,249,246,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .nav-brand {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── SECTIONS ── */
+    section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 5rem 2rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    section:last-of-type { border-bottom: none; }
+
+    /* ── HERO ── */
+    #about {
+      padding-top: 6rem;
+      padding-bottom: 5rem;
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      gap: 3rem;
+      align-items: start;
+    }
+    .hero-text h1 {
+      font-family: var(--serif);
+      font-size: 2.6rem;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.4rem;
+    }
+    .hero-text .title {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .hero-text p {
+      font-size: 1.05rem;
+      color: var(--ink-mid);
+      max-width: 540px;
+      margin-bottom: 1rem;
+    }
+    .contact-row {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      margin-top: 2rem;
+    }
+    .contact-row a {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      border: 1px solid var(--rule);
+      padding: 0.4rem 1rem;
+      border-radius: 2px;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .contact-row a:hover { border-color: var(--accent); color: var(--accent); }
+    .contact-row a.primary {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+    }
+    .contact-row a.primary:hover { background: #1e4a73; border-color: #1e4a73; }
+
+    .avatar-wrap {
+      display: flex; justify-content: flex-end;
+    }
+    .avatar {
+      width: 170px; height: 170px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--rule);
+      /* placeholder gradient — replace with your photo */
+      background: linear-gradient(135deg, #d8d4cc 0%, #c8c4bc 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      color: var(--ink-light);
+      text-align: center;
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section-label {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── RESEARCH INTERESTS ── */
+    .interests-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .interest-card {
+      padding: 1.4rem 1.6rem;
+      background: var(--bg-warm);
+      border-left: 3px solid var(--accent);
+    }
+    .interest-card h3 {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+    .interest-card p {
+      font-size: 0.9rem;
+      color: var(--ink-mid);
+      line-height: 1.6;
+    }
+
+    /* ── PUBLICATIONS ── */
+    .pub-list { list-style: none; }
+    .pub-list li {
+      padding: 1.6rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .pub-list li:last-child { border-bottom: none; }
+    .pub-year {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .pub-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.45;
+      margin-bottom: 0.25rem;
+    }
+    .pub-authors {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: var(--ink-mid);
+      font-style: italic;
+      margin-bottom: 0.3rem;
+    }
+    .pub-venue {
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      color: var(--ink-light);
+    }
+    .pub-links {
+      display: flex; gap: 1rem;
+      margin-top: 0.6rem;
+    }
+    .pub-links a {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .pub-links a:hover { text-decoration: underline; }
+
+    /* ── TEACHING ── */
+    .course-list { list-style: none; }
+    .course-list li {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .course-list li:last-child { border-bottom: none; }
+    .course-code {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink-light);
+      padding-top: 0.1rem;
+    }
+    .course-info h3 {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.15rem;
+    }
+    .course-info p {
+      font-size: 0.85rem;
+      color: var(--ink-mid);
+    }
+
+    /* ── CV ── */
+    .cv-banner {
+      background: var(--accent-light);
+      border: 1px solid #c0d4e8;
+      padding: 1.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .cv-banner p {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      color: var(--ink-mid);
+    }
+    .cv-banner a {
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 1.4rem;
+      border-radius: 2px;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .cv-banner a:hover { background: #1e4a73; }
+
+    /* ── FOOTER ── */
+    footer {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      color: var(--ink-light);
+    }
+    footer a {
+      color: var(--ink-light);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--accent); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 620px) {
+      #about { grid-template-columns: 1fr; }
+      .avatar-wrap { justify-content: flex-start; order: -1; }
+      .interests-grid { grid-template-columns: 1fr; }
+      .cv-banner { flex-direction: column; align-items: flex-start; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#about" class="nav-brand">Your Name</a>
+      <ul class="nav-links">
+        <li><a href="#research">Research</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#teaching">Teaching</a></li>
+        <li><a href="#cv">CV</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO / ABOUT -->
+  <section id="about">
+    <div class="hero-text">
+      <h1>Dr. Your Full Name</h1>
+      <p class="title">Assistant Professor · Department of [Your Field] · University Name</p>
+      <p>
+        I am a researcher working at the intersection of [Topic A] and [Topic B].
+        My work focuses on [brief description of research agenda — 1–2 sentences].
+      </p>
+      <p>
+        Previously, I was a postdoctoral fellow at [Institution]. I received my Ph.D.
+        from [University] in [Year].
+      </p>
+      <div class="contact-row">
+        <a href="mailto:you@university.edu" class="primary">Email Me</a>
+        <a href="https://scholar.google.com" target="_blank">Google Scholar</a>
+        <a href="https://orcid.org" target="_blank">ORCID</a>
+        <a href="https://twitter.com" target="_blank">Twitter / X</a>
+        <a href="https://github.com" target="_blank">GitHub</a>
+      </div>
+    </div>
+    <div class="avatar-wrap">
+      <!-- Replace src with your photo path, e.g. src="photo.jpg" -->
+      <div class="avatar">Your<br>Photo</div>
+    </div>
+  </section>
+
+  <!-- RESEARCH INTERESTS -->
+  <section id="research">
+    <p class="section-label">Research Interests</p>
+    <div class="interests-grid">
+      <div class="interest-card">
+        <h3>Topic One</h3>
+        <p>Brief description of what you study in this area and why it matters.</p>
+      </div>
+      <div class="interest-card">
+        <h3>Topic Two</h3>
+        <p>Brief description of what you study in this area and why it matters.</p>
+      </div>
+      <div class="interest-card">
+        <h3>Topic Three</h3>
+        <p>Brief description of what you study in this area and why it matters.</p>
+      </div>
+      <div class="interest-card">
+        <h3>Topic Four</h3>
+        <p>Brief description of what you study in this area and why it matters.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <p class="section-label">Selected Publications</p>
+    <ul class="pub-list">
+
+      <li>
+        <p class="pub-year">2024</p>
+        <p class="pub-title">The Title of Your Most Recent Paper: A Long Subtitle Goes Here</p>
+        <p class="pub-authors">Your Name, Co-Author A, Co-Author B</p>
+        <p class="pub-venue"><em>Journal of Important Things</em>, Vol. 12, No. 3, pp. 100–120</p>
+        <div class="pub-links">
+          <a href="#">PDF</a>
+          <a href="#">DOI</a>
+          <a href="#">Preprint</a>
+          <a href="#">Code</a>
+        </div>
+      </li>
+
+      <li>
+        <p class="pub-year">2023</p>
+        <p class="pub-title">Another Paper Title You Are Proud Of</p>
+        <p class="pub-authors">Your Name, Co-Author C</p>
+        <p class="pub-venue"><em>Conference on Research Excellence (CORE 2023)</em></p>
+        <div class="pub-links">
+          <a href="#">PDF</a>
+          <a href="#">DOI</a>
+          <a href="#">Slides</a>
+        </div>
+      </li>
+
+      <li>
+        <p class="pub-year">2022</p>
+        <p class="pub-title">Earlier Work That Established Your Research Direction</p>
+        <p class="pub-authors">Your Name, Advisor Name, Co-Author D</p>
+        <p class="pub-venue"><em>Annual Review of [Field]</em>, Vol. 8</p>
+        <div class="pub-links">
+          <a href="#">PDF</a>
+          <a href="#">DOI</a>
+        </div>
+      </li>
+
+    </ul>
+    <p style="margin-top:1.5rem; font-family: var(--sans); font-size: 0.82rem; color: var(--ink-light);">
+      For a complete list, see my <a href="https://scholar.google.com" style="color: var(--accent);">Google Scholar profile</a>.
+    </p>
+  </section>
+
+  <!-- TEACHING -->
+  <section id="teaching">
+    <p class="section-label">Teaching</p>
+    <ul class="course-list">
+      <li>
+        <span class="course-code">DEPT 101</span>
+        <div class="course-info">
+          <h3>Introduction to [Your Field]</h3>
+          <p>Undergraduate survey course · Spring 2024, Fall 2023</p>
+        </div>
+      </li>
+      <li>
+        <span class="course-code">DEPT 302</span>
+        <div class="course-info">
+          <h3>Advanced Topics in [Subfield]</h3>
+          <p>Graduate seminar · Fall 2024</p>
+        </div>
+      </li>
+      <li>
+        <span class="course-code">DEPT 410</span>
+        <div class="course-info">
+          <h3>Research Methods</h3>
+          <p>Graduate methods course · Spring 2023, Spring 2024</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- CV -->
+  <section id="cv">
+    <p class="section-label">Curriculum Vitae</p>
+    <div class="cv-banner">
+      <p>Download my full CV for a complete record of publications, grants, service, and academic history.</p>
+      <!-- Link to your CV file, e.g. href="cv.pdf" -->
+      <a href="cv.pdf" target="_blank">Download CV (PDF)</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Your Name · <a href="mailto:you@university.edu">you@university.edu</a></p>
+    <p>Built with GitHub Pages</p>
+  </footer>
+
+</body>
+</html>
