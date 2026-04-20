@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News & Updates — Dr. Your Name</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a18;
+      --ink-mid: #4a4a46;
+      --ink-light: #8a8a84;
+      --rule: #e0ddd6;
+      --bg: #faf9f6;
+      --bg-warm: #f3f1ec;
+      --accent: #2a5c8f;
+      --accent-light: #e8f0f8;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --max: 780px;
+
+      --tag-paper-bg: #e8f0f8; --tag-paper-tx: #185FA5;
+      --tag-talk-bg:  #EAF3DE; --tag-talk-tx:  #3B6D11;
+      --tag-award-bg: #FAEEDA; --tag-award-tx: #854F0B;
+      --tag-media-bg: #FBEAF0; --tag-media-tx: #993556;
+      --tag-grant-bg: #E1F5EE; --tag-grant-tx: #0F6E56;
+      --tag-misc-bg:  #F1EFE8; --tag-misc-tx:  #5F5E5A;
+    }
+
+    html { font-size: 17px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--serif);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+    }
+
+    /* ── NAV (identical to index) ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250,249,246,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-inner {
+      max-width: var(--max); margin: 0 auto;
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
+    }
+    .nav-brand {
+      font-family: var(--serif); font-size: 1rem; font-weight: 500;
+      color: var(--ink); text-decoration: none; letter-spacing: 0.01em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--sans); font-size: 0.8rem; font-weight: 400;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--ink-mid); text-decoration: none; transition: color 0.15s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      max-width: var(--max); margin: 0 auto;
+      padding: 4.5rem 2rem 3rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .page-header h1 {
+      font-family: var(--serif); font-size: 2.2rem;
+      font-weight: 400; letter-spacing: -0.01em; margin-bottom: 0.5rem;
+    }
+    .page-header p {
+      font-family: var(--sans); font-size: 0.88rem;
+      color: var(--ink-mid); max-width: 520px; line-height: 1.6;
+    }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      max-width: var(--max); margin: 0 auto;
+      padding: 1.5rem 2rem;
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .filter-btn {
+      font-family: var(--sans); font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 0.3rem 0.9rem; border-radius: 2px; cursor: pointer;
+      border: 1px solid var(--rule); background: transparent;
+      color: var(--ink-mid); transition: all 0.15s;
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* ── MAIN LAYOUT ── */
+    .main-wrap {
+      max-width: var(--max); margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    /* ── YEAR DIVIDER ── */
+    .year-divider {
+      font-family: var(--sans); font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink-light);
+      padding: 2.5rem 0 1rem;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 0;
+    }
+
+    /* ── NEWS ITEMS ── */
+    .news-item {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 1.2rem;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--rule);
+      transition: opacity 0.2s;
+    }
+    .news-item.hidden { display: none; }
+
+    .news-date {
+      font-family: var(--sans); font-size: 0.78rem;
+      color: var(--ink-light); line-height: 1.4;
+      padding-top: 0.15rem;
+    }
+    .news-date .month { display: block; }
+    .news-date .day   { display: block; font-size: 1.5rem; font-weight: 300; line-height: 1; color: var(--ink-mid); }
+
+    .news-body {}
+    .news-body h2 {
+      font-family: var(--serif); font-size: 1.1rem; font-weight: 500;
+      line-height: 1.4; margin-bottom: 0.4rem;
+    }
+    .news-body p {
+      font-size: 0.95rem; color: var(--ink-mid); line-height: 1.65;
+      margin-bottom: 0.5rem;
+    }
+    .news-body a {
+      color: var(--accent); text-decoration: none;
+    }
+    .news-body a:hover { text-decoration: underline; }
+
+    /* ── TAG ── */
+    .tag {
+      display: inline-block;
+      font-family: var(--sans); font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.18rem 0.6rem; border-radius: 2px;
+      margin-bottom: 0.5rem;
+    }
+    .tag-paper  { background: var(--tag-paper-bg);  color: var(--tag-paper-tx); }
+    .tag-talk   { background: var(--tag-talk-bg);   color: var(--tag-talk-tx); }
+    .tag-award  { background: var(--tag-award-bg);  color: var(--tag-award-tx); }
+    .tag-media  { background: var(--tag-media-bg);  color: var(--tag-media-tx); }
+    .tag-grant  { background: var(--tag-grant-bg);  color: var(--tag-grant-tx); }
+    .tag-misc   { background: var(--tag-misc-bg);   color: var(--tag-misc-tx); }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      padding: 4rem 0;
+      font-family: var(--sans); font-size: 0.88rem;
+      color: var(--ink-light); text-align: center;
+      display: none;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      max-width: var(--max); margin: 0 auto;
+      padding: 2.5rem 2rem;
+      border-top: 1px solid var(--rule);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p { font-family: var(--sans); font-size: 0.78rem; color: var(--ink-light); }
+    footer a { color: var(--ink-light); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    @media (max-width: 540px) {
+      .news-item { grid-template-columns: 1fr; gap: 0.3rem; }
+      .news-date { display: flex; align-items: baseline; gap: 0.5rem; }
+      .news-date .day { font-size: 1rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">Your Name</a>
+      <ul class="nav-links">
+        <li><a href="index.html#research">Research</a></li>
+        <li><a href="index.html#publications">Publications</a></li>
+        <li><a href="index.html#teaching">Teaching</a></li>
+        <li><a href="index.html#cv">CV</a></li>
+        <li><a href="news.html" class="active">News</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <h1>News & Updates</h1>
+    <p>Recent papers, talks, awards, and other developments from my research group.</p>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="paper">Papers</button>
+    <button class="filter-btn" data-filter="talk">Talks</button>
+    <button class="filter-btn" data-filter="award">Awards</button>
+    <button class="filter-btn" data-filter="grant">Grants</button>
+    <button class="filter-btn" data-filter="media">Media</button>
+    <button class="filter-btn" data-filter="misc">Other</button>
+  </div>
+
+  <!-- NEWS FEED -->
+  <div class="main-wrap">
+
+    <!-- ── 2025 ── -->
+    <div class="year-divider" data-year="2025">2025</div>
+
+    <article class="news-item" data-category="paper">
+      <div class="news-date">
+        <span class="month">Jun</span>
+        <span class="day">10</span>
+      </div>
+      <div class="news-body">
+        <span class="tag tag-paper">New Paper</span>
+        <h2>New paper accepted at <em>Journal of Important Things</em></h2>
+        <p>
+          Our paper "<a href="#">Title of Your Paper: Subtitle</a>" has been accepted.
+          In this work we show that [one-sentence summary of the finding or contribution].
+          Co-authored with [Collaborator Name].
+        </p>
+        <p><a href="#">Read preprint →</a></p>
+      </div>
+    </article>
+
+    <article class="news-item" data-category="talk">
+      <div class="news-date">
+        <span class="month">May</span>
+        <span class="day">22</span>
+      </div>
+      <div class="news-body">
+        <span class="tag tag-talk">Talk</span>
+        <h2>Invited talk at Conference Name 2025</h2>
+        <p>
+          I presented "<a href="#">Talk Title</a>" at [Conference / Institution], [City].
+          Slides and a recording are available below.
+        </p>
+        <p><a href="#">Slides (PDF) →</a> &nbsp; <a href="#">Recording →</a></p>
+      </div>
+    </article>
+
+    <article class="news-item" data-category="award">
+      <div class="news-date">
+        <span class="month">Mar</span>
+        <span class="day">5</span>
+      </div>
+      <div class="news-body">
+        <span class="tag tag-award">Award</span>
+        <h2>Received the [Award Name] from [Organization]</h2>
+        <p>
+          I am honoured to have been selected for [brief description of what the award
+          recognises and why it matters to you / your field].
+        </p>
+      </div>
+    </article>
+
+    <article class="news-item" data-category="grant">
+      <div class="news-date">
+        <span class="month">Feb</span>
+        <span class="day">14</span>
+      </div>
+      <div class="news-body">
+        <span class="tag tag-grant">Grant</span>
+        <h2>New grant funded: [Project Title]</h2>
+        <p>
+          Our project "<a href="#">Project Title</a>" has been funded by [Funding Agency]
+          for [amount / duration]. The project will [one sentence on the research goal].
+        </p>
+      </div>
+    </article>
+
+    <!-- ── 2024 ── -->
+    <div class="year-divider" data-year="2024">2024</div>
+
+    <article class="news-item" data-category="media">
+      <div class="news-date">
+        <span class="month">Nov</span>
+        <span class="day">30</span>
+      </div>
+      <div class="news-body">
+        <span class="tag tag-media">Media</span>
+        <h2>Research featured in <em>Publication Name</em></h2>
+        <p>
+          Our work on [topic] was covered in <a href="#">Publication Name</a>.
+          [One sentence on what angle the piece took or why it was picked up.]
+        </p>
+        <p><a href="#">Read the article →</a></p>
+      </div>
+    </article>
+
+    <article class="news-item" data-category="talk">
+      <div class="news-date">
+        <span class="month">Sep</span>
+        <span class="day">18</span>
+      </div>
+      <div class="news-body">
+        <span class="tag tag-talk">Talk</span>
+        <h2>Keynote at [Workshop / Symposium Name]</h2>
+        <p>
+          Delivered the opening keynote on [theme] at [event], [location].
+        </p>
+        <p><a href="#">Slides (PDF) →</a></p>
+      </div>
+    </article>
+
+    <article class="news-item" data-category="paper">
+      <div class="news-date">
+        <span class="month">Jun</span>
+        <span class="day">3</span>
+      </div>
+      <div class="news-body">
+        <span class="tag tag-paper">New Paper</span>
+        <h2>Preprint posted: "<a href="#">Paper Title</a>"</h2>
+        <p>
+          We have posted a preprint of our latest work on [topic].
+          [One–two sentence summary of the key result or methodology.]
+        </p>
+        <p><a href="#">arXiv / SSRN preprint →</a></p>
+      </div>
+    </article>
+
+    <article class="news-item" data-category="misc">
+      <div class="news-date">
+        <span class="month">Jan</span>
+        <span class="day">8</span>
+      </div>
+      <div class="news-body">
+        <span class="tag tag-misc">Other</span>
+        <h2>Joined [University / Institute] as [Position]</h2>
+        <p>
+          I have joined [Department, University] as [Position title].
+          I look forward to continuing my research on [topic] and to working with
+          the excellent colleagues here.
+        </p>
+      </div>
+    </article>
+
+    <!-- Empty state shown when filter returns nothing -->
+    <p class="empty-state" id="empty-state">No updates in this category yet.</p>
+
+  </div><!-- /.main-wrap -->
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Your Name · <a href="mailto:you@university.edu">you@university.edu</a></p>
+    <p><a href="index.html">← Back to home</a></p>
+  </footer>
+
+  <script>
+    const btns  = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.news-item');
+    const empty = document.getElementById('empty-state');
+    const dividers = document.querySelectorAll('.year-divider');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const f = btn.dataset.filter;
+
+        items.forEach(item => {
+          const match = f === 'all' || item.dataset.category === f;
+          item.classList.toggle('hidden', !match);
+        });
+
+        // show/hide year dividers based on whether any visible item follows them
+        dividers.forEach(div => {
+          const year = div.dataset.year;
+          const hasVisible = [...items].some(item =>
+            !item.classList.contains('hidden') &&
+            item.previousElementSibling?.dataset?.year === year ||
+            (() => {
+              let el = item.previousElementSibling;
+              while (el) {
+                if (el.dataset?.year === year) return true;
+                if (el.classList?.contains('year-divider')) return false;
+                el = el.previousElementSibling;
+              }
+              return false;
+            })()
+          );
+          div.style.display = hasVisible ? '' : 'none';
+        });
+
+        const anyVisible = [...items].some(i => !i.classList.contains('hidden'));
+        empty.style.display = anyVisible ? 'none' : 'block';
+      });
+    });
+  </script>
+
+</body>
+</html>
